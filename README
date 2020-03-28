@@ -1,0 +1,10 @@
+# Teamspeak in qemu
+
+Set up a container with qemu installed that can run the teamspeak binary.
+
+It is using the same entrypoint as the official container from https://hub.docker.com/_/teamspeak,
+but is using a `Debian` as a baseimage for using `qemu`.
+
+## Problem
+
+The binary right now periodically `SEGFAULTS` with a `BUSERROR`.

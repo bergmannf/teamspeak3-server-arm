@@ -1,11 +1,12 @@
 #! /bin/bash
-set -ex
+set -e
 
 # don't start ts3server with root permissions
 if [ "$1" = 'ts3server' -a "$(id -u)" = '0' ]; then
     chown -R ts3server /var/ts3server
     echo "Running SUDO"
-    exec sudo -u ts3server "$0" "$@"
+    exec sudo --preserve-env=PATH,LD_LIBRARY_PATH,TS3SERVER_DB_HOST,TS3SERVER_DB_USER,TS3SERVER_DB_PASSWORD,TS3SERVER_DB_NAME,TS3SERVER_LICENSE \
+        -u ts3server "$0" "$@"
 fi
 
 # have the default inifile as the last parameter

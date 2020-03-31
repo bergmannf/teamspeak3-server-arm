@@ -1,9 +1,17 @@
-FROM debian:bullseye
+FROM alpine AS qemu
+
+RUN apk add curl && curl -L https://github.com/multiarch/qemu-user-static/releases/download/v4.2.0-6/qemu-arm-static -O && chmod guo+x qemu-arm-static
+RUN curl -L https://github.com/multiarch/qemu-user-static/releases/download/v4.2.0-6/qemu-amd64-static -O && chmod guo+x qemu-amd64-static
+
+FROM arm32v7/debian:bullseye
+
+COPY --from=qemu qemu-arm-static /usr/bin
+COPY --from=qemu qemu-amd64-static /usr/bin
 
 RUN dpkg --add-architecture amd64
 RUN apt update
 # Requires libstdc++6 for error while loading shared libraries: libstdc++.so.6: cannot open shared object file: No such file or directory
-RUN apt install -y ca-certificates libstdc++6:amd64 binfmt-support libpipeline1 lsb-base qemu qemu-user-static libc6:amd64 wget bzip2 sudo
+RUN apt install -y ca-certificates libstdc++6:amd64 binfmt-support libpipeline1 lsb-base libc6:amd64 wget bzip2 sudo
 
 RUN set -eux; \
  addgroup --gid 9987 ts3server; \

@@ -1,0 +1,7 @@
+image: monadt/teamspeak3-server:latest
+manifests:
+  - image: monadt/teamspeak3-server:latest
+    platform:
+      architecture: arm
+      os: linux
+      variant: v7

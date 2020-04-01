@@ -1,7 +1,6 @@
 FROM alpine AS qemu
 
 RUN apk add curl && curl -L https://github.com/multiarch/qemu-user-static/releases/download/v4.2.0-6/qemu-arm-static -O && chmod guo+x qemu-arm-static
-RUN curl -L https://github.com/multiarch/qemu-user-static/releases/download/v4.2.0-6/qemu-amd64-static -O && chmod guo+x qemu-amd64-static
 
 FROM arm32v7/debian:bullseye
 
@@ -42,7 +41,8 @@ WORKDIR /var/ts3server/
 EXPOSE 9987/udp 10011 30033 
 
 COPY entrypoint.sh /opt/ts3server
-COPY --from=qemu qemu-amd64-static /usr/bin
+
+RUN apt install -y qemu-user-static
 
 ENTRYPOINT [ "entrypoint.sh" ]
 CMD [ "ts3server" ]

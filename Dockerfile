@@ -13,8 +13,8 @@ RUN set -eux; \
 ENV PATH "${PATH}:/opt/ts3server"
 ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/usr/local/lib/"
 
-ARG TEAMSPEAK_CHECKSUM=a8a65388bb1d32260d3568e7bfb7da264f58a1256799e30309589856e4b36b51
-ARG TEAMSPEAK_URL=https://files.teamspeak-services.com/releases/server/3.12.0/teamspeak3-server_linux_amd64-3.12.0.tar.bz2
+ARG TEAMSPEAK_CHECKSUM=cfbffba30a570f0ba33a74ce5e5dbda54ce564d917a27183cdcaf82cc2b4abb7
+ARG TEAMSPEAK_URL=https://files.teamspeak-services.com/releases/server/3.12.1/teamspeak3-server_linux_amd64-3.12.1.tar.bz2
 
 RUN set -eux; \
  wget "${TEAMSPEAK_URL}" -O server.tar.bz2; \
